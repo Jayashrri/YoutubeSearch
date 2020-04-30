@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework import generics
 
-# Create your views here.
+from .models import Video
+from .utils import VideoSerializer, VideoPagination
+
+
+class VideoListView(generics.ListAPIView):
+    queryset = Video.objects.all().order_by("-published_at")
+    serializer_class = VideoSerializer
+    pagination_class = VideoPagination
